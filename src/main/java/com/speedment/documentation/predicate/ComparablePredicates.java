@@ -21,6 +21,7 @@ import com.speedment.datamodel.db0.hares.hare.Hare;
 import com.speedment.datamodel.db0.hares.hare.HareManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
+import com.speedment.runtime.field.predicate.Inclusion;
 
 /**
  *
@@ -41,15 +42,116 @@ public class ComparablePredicates {
     }
 
     private void run() {
+        all();
         equal();
+        notEqual();
+        lessThan();
+        lessOrEqual();
+        greaterThan();
+        greaterOrEqual();
+        between();
+        betweenIncludeInclude();
+        notBetween();
+        notBetweenIncludeInclude();
+    }
+
+    private void all() {
+        ExampleUtil.log("all");
+
+        hares.stream()
+            .forEachOrdered(System.out::println);
+
     }
 
     private void equal() {
         ExampleUtil.log("equal");
-        
+
+        long count = hares.stream()
+            .filter(Hare.AGE.equal(3))
+            .count();
+
+        System.out.format("There are %d hare(s) with an age of 3 %n", count);
+    }
+
+    private void notEqual() {
+        ExampleUtil.log("notEqual");
+
         hares.stream()
-            .filter(Hare.NAME.equal("Harry"))
+            .filter(Hare.AGE.notEqual(3))
             .forEachOrdered(System.out::println);
+
+    }
+
+    private void lessThan() {
+        ExampleUtil.log("lessThan");
+
+        hares.stream()
+            .filter(Hare.AGE.lessThan(3))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void lessOrEqual() {
+        ExampleUtil.log("lessOrEqual");
+
+        hares.stream()
+            .filter(Hare.AGE.lessOrEqual(3))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void greaterThan() {
+        ExampleUtil.log("greaterThan");
+
+        hares.stream()
+            .filter(Hare.AGE.greaterThan(3))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void greaterOrEqual() {
+        ExampleUtil.log("greaterOrEqual");
+
+        hares.stream()
+            .filter(Hare.AGE.greaterOrEqual(3))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void between() {
+        ExampleUtil.log("between");
+
+        hares.stream()
+            .filter(Hare.AGE.between(3, 9))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void betweenIncludeInclude() {
+        ExampleUtil.log("betweenIncludeInclude");
+
+        hares.stream()
+            .filter(Hare.AGE.between(3, 9, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void notBetween() {
+        ExampleUtil.log("notBetween");
+
+        hares.stream()
+            .filter(Hare.AGE.notBetween(3, 9))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void notBetweenIncludeInclude() {
+        ExampleUtil.log("notBetweenIncludeInclude");
+
+        hares.stream()
+            .filter(Hare.AGE.notBetween(3, 9, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
+            .forEachOrdered(System.out::println);
+
     }
 
 }
