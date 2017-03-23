@@ -22,6 +22,9 @@ import com.speedment.datamodel.db0.hares.hare.HareManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 import com.speedment.runtime.field.predicate.Inclusion;
+import java.util.Set;
+import static java.util.stream.Collectors.toSet;
+import java.util.stream.Stream;
 
 /**
  *
@@ -53,6 +56,10 @@ public class ComparablePredicates {
         betweenIncludeInclude();
         notBetween();
         notBetweenIncludeInclude();
+        in();
+        notIn();
+        inSet();
+        notInSet();
     }
 
     private void all() {
@@ -150,6 +157,46 @@ public class ComparablePredicates {
 
         hares.stream()
             .filter(Hare.AGE.notBetween(3, 9, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void in() {
+        ExampleUtil.log("in");
+
+        hares.stream()
+            .filter(Hare.AGE.in(2, 3, 4))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void notIn() {
+        ExampleUtil.log("notIn");
+
+        hares.stream()
+            .filter(Hare.AGE.notIn(2, 3, 4))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void inSet() {
+        ExampleUtil.log("inSet");
+
+        Set<Integer> set = Stream.of(2, 3, 4).collect(toSet());
+
+        hares.stream()
+            .filter(Hare.AGE.in(set))
+            .forEachOrdered(System.out::println);
+
+    }
+
+    private void notInSet() {
+        ExampleUtil.log("notInSet");
+
+        Set<Integer> set = Stream.of(2, 3, 4).collect(toSet());
+
+        hares.stream()
+            .filter(Hare.AGE.notIn(set))
             .forEachOrdered(System.out::println);
 
     }

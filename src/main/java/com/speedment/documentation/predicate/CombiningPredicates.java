@@ -21,6 +21,7 @@ import com.speedment.datamodel.db0.hares.hare.Hare;
 import com.speedment.datamodel.db0.hares.hare.HareManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
+import com.speedment.runtime.core.util.StreamComposition;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -28,75 +29,72 @@ import java.util.stream.Stream;
  *
  * @author Per Minborg
  */
-public class Examples {
+public class CombiningPredicates {
 
     private final HaresApplication app;
     private final HareManager hares;
 
-    public Examples() {
+    public CombiningPredicates() {
         app = buildApplication();
         hares = app.getOrThrow(HareManager.class);
     }
 
     public static void main(String[] args) {
-        new Examples().run();
+        new CombiningPredicates().run();
     }
 
     private void run() {
-        printFirstTen();
-        startsWith();
-        fieldTest();
-        fieldTestUnOptimized();
-        example();
+        isOldAndStartsWithH_usingAnd();
+        isOldAndStartsWithH_using2Filters();
+        or();
+        orUsing2Streams();
     }
 
-    private void printFirstTen() {
-        ExampleUtil.log("printFirstTen");
+    private void isOldAndStartsWithH_usingAnd() {
+        ExampleUtil.log("isOldAndStartsWithH_usingAnd");
+
+        Predicate<Hare> isAdult = Hare.AGE.greaterThan(2);
+        Predicate<Hare> nameContains_e = Hare.NAME.contains("e");
+
+        Predicate<Hare> isAdultAndNameContains_e = isAdult.and(nameContains_e);
 
         hares.stream()
-            .limit(10)
+            .filter(isAdultAndNameContains_e)
             .forEachOrdered(System.out::println);
     }
 
-    private void startsWith() {
-        ExampleUtil.log("startsWith");
-
-        Predicate<String> startsWithA = (String s) -> s.startsWith("A");
-
-        Stream.of("Snail", "Ape", "Bird", "Ant", "Alligator")
-            .filter(startsWithA)
-            .forEachOrdered(System.out::println);
-
-    }
-
-    private void fieldTest() {
-        ExampleUtil.log("fieldTest");
-
-        Predicate<Hare> greaterOrEqualH = Hare.NAME.greaterOrEqual("He");
+    private void isOldAndStartsWithH_using2Filters() {
+        ExampleUtil.log("isOldAndStartsWithH_using2Filters");
 
         hares.stream()
-            .filter(greaterOrEqualH)
+            .filter(Hare.AGE.greaterThan(2))
+            .filter(Hare.NAME.contains("e"))
             .forEachOrdered(System.out::println);
     }
 
-    private void fieldTestUnOptimized() {
-        ExampleUtil.log("fieldTestUnOptimized");
+    private void or() {
+        ExampleUtil.log("or");
 
-        Predicate<Hare> greaterOrEqualH = h -> "He".compareTo(h.getName()) <= 0;
+        Predicate<Hare> isAdult = Hare.AGE.greaterThan(2);
+        Predicate<Hare> nameContains_e = Hare.NAME.contains("e");
+
+        Predicate<Hare> isAdultOrNameContains_e = isAdult.or(nameContains_e);
 
         hares.stream()
-            .filter(greaterOrEqualH)
+            .filter(isAdultOrNameContains_e)
             .forEachOrdered(System.out::println);
     }
 
-    private void example() {
-        ExampleUtil.log("example");
+    private void orUsing2Streams() {
+        ExampleUtil.log("orUsing2Streams");
 
-        hares.stream()
-            .filter(Hare.COLOR.in("Gray", "White"))
-            .filter(Hare.AGE.greaterThan(1))
-            .filter(Hare.NAME.between("A", "K"))
+        StreamComposition.concatAndAutoClose(
+            hares.stream().filter(Hare.AGE.greaterThan(2)),
+            hares.stream().filter(Hare.NAME.contains("e"))
+        )
+            .distinct()
             .forEachOrdered(System.out::println);
+
     }
 
 }

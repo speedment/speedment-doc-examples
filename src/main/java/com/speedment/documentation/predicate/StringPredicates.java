@@ -42,23 +42,152 @@ public class StringPredicates {
 
     private void run() {
         isEmpty();
-        isNotNull();
+        isNotEmpty();
+        equalIgnoreCase();
+        notEqualIgnoreCase();
+        startsWith();
+        notStartsWith();
+        startsWithIgnoreCase();
+        notStartsWithIgnoreCase();
+        endsWith();
+        notEndsWith();
+        endsWithIgnoreCase();
+        notEndsWithIgnoreCase();
+        contains();
+        notContains();
+        containsIgnoreCase();
+        notContainsIgnoreCase();
     }
 
     private void isEmpty() {
         ExampleUtil.log("isEmpty");
 
-        hares.stream()
+        long count = hares.stream()
             .filter(Hare.NAME.isEmpty())
-            .forEachOrdered(System.out::println);
+            .count();
+
+        System.out.format("There are %d hare(s) with an empty name %n", count);
     }
 
-    private void isNotNull() {
-        ExampleUtil.log("isNotNull");
-        
+    private void isNotEmpty() {
+        ExampleUtil.log("isNotEmpty");
+
         hares.stream()
             .filter(Hare.NAME.isNotEmpty())
             .forEachOrdered(System.out::println);
     }
 
+    private void equalIgnoreCase() {
+        ExampleUtil.log("equalIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.equalIgnoreCase("HaRry"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notEqualIgnoreCase() {
+        ExampleUtil.log("notEqualIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.notEqualIgnoreCase("HaRry"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void startsWith() {
+        ExampleUtil.log("startsWith");
+
+        hares.stream()
+            .filter(Hare.NAME.startsWith("H"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notStartsWith() {
+        ExampleUtil.log("notStartsWith");
+
+        hares.stream()
+            .filter(Hare.NAME.notStartsWith("H"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void startsWithIgnoreCase() {
+        ExampleUtil.log("startsWithIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.startsWithIgnoreCase("he"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notStartsWithIgnoreCase() {
+        ExampleUtil.log("notStartsWithIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.notStartsWithIgnoreCase("he"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void endsWith() {
+        ExampleUtil.log("endsWith");
+
+        hares.stream()
+            .filter(Hare.NAME.endsWith("y"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notEndsWith() {
+        ExampleUtil.log("notEndsWith");
+
+        hares.stream()
+            .filter(Hare.NAME.notEndsWith("y"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void endsWithIgnoreCase() {
+        ExampleUtil.log("endsWithIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.endsWithIgnoreCase("Y"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notEndsWithIgnoreCase() {
+        ExampleUtil.log("notEndsWithIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.notEndsWithIgnoreCase("Y"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void contains() {
+        ExampleUtil.log("contains");
+
+        hares.stream()
+            .filter(Hare.NAME.contains("tt"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notContains() {
+        ExampleUtil.log("notContains");
+
+        hares.stream()
+            .filter(Hare.NAME.notContains("tt"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void containsIgnoreCase() {
+        ExampleUtil.log("containsIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.containsIgnoreCase("Tt"))
+            .forEachOrdered(System.out::println);
+    }
+
+    private void notContainsIgnoreCase() {
+        ExampleUtil.log("notContainsIgnoreCase");
+
+        hares.stream()
+            .filter(Hare.NAME.notContainsIgnoreCase("Tt"))
+            .forEachOrdered(System.out::println);
+    }
+
+    // startsWith("Olle").ignoreCase().negate() = notStartsWithIgnoreCase("Olle")
 }
