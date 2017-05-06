@@ -16,8 +16,8 @@
  */
 package com.speedment.documentation.util;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.HaresApplicationBuilder;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.SakilaApplicationBuilder;
 import com.speedment.runtime.core.ApplicationBuilder.LogType;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -28,18 +28,18 @@ import java.util.stream.Stream;
  */
 public final class ExampleUtil {
 
-    private static final String DEFAULT_PASSWORD = "hare";
+    private static final String DEFAULT_PASSWORD = "sakila-password";
 
-    public static HaresApplication buildApplication() {
+    public static SakilaApplication buildApplication() {
 
-        System.out.println("Connecting to a MySQL database on 'localhost:3306'");
+        System.out.println("Connecting to the database");
         System.out.println("Enter password (<return> = '" + DEFAULT_PASSWORD + "'): ");
 
         final Scanner scan = new Scanner(System.in);
         final String inputPassword = scan.nextLine();
         final String password = inputPassword.isEmpty() ? DEFAULT_PASSWORD : inputPassword;
 
-        final HaresApplicationBuilder builder = new HaresApplicationBuilder()
+        final SakilaApplicationBuilder builder = new SakilaApplicationBuilder()
             .withLogging(LogType.STREAM)
             .withPassword(password);
 

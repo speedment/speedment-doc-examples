@@ -16,9 +16,9 @@
  */
 package com.speedment.documentation.comparator;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 import java.util.Comparator;
@@ -30,12 +30,12 @@ import java.util.stream.Stream;
  */
 public class Examples {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public Examples() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class Examples {
     private void printFirstTen() {
         ExampleUtil.log("printFirstTen");
 
-        hares.stream()
+        films.stream()
             .limit(10)
             .forEachOrdered(System.out::println);
     }
@@ -60,8 +60,8 @@ public class Examples {
     private void unOptimized() {
         ExampleUtil.log("unOptimized");
 
-        hares.stream()
-            .sorted(Comparator.comparing(Hare::getName))
+        films.stream()
+            .sorted(Comparator.comparing(Film::getTitle))
             .forEachOrdered(System.out::println);
 
     }
@@ -80,9 +80,9 @@ public class Examples {
     private void sortByName() {
         ExampleUtil.log("sortByName");
 
-        Comparator<Hare> nameOrder = Hare.NAME.comparator();
+        Comparator<Film> nameOrder = Film.TITLE.comparator();
 
-        hares.stream()
+        films.stream()
             .sorted(nameOrder)
             .forEachOrdered(System.out::println);
 
@@ -91,7 +91,7 @@ public class Examples {
     private void primitiveComparatorType() {
         ExampleUtil.log("primitiveComparatorType");
 
-        Comparator<Hare> idComparator = Hare.ID.comparator();
+        Comparator<Film> idComparator = Film.FILM_ID.comparator();
 
         System.out.println(idComparator.getClass().getName());
 

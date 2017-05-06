@@ -16,9 +16,9 @@
  */
 package com.speedment.documentation.predicate;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 import com.speedment.runtime.field.predicate.Inclusion;
@@ -32,12 +32,12 @@ import java.util.stream.Stream;
  */
 public class ComparablePredicates {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public ComparablePredicates() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -65,7 +65,7 @@ public class ComparablePredicates {
     private void all() {
         ExampleUtil.log("all");
 
-        hares.stream()
+        films.stream()
             .forEachOrdered(System.out::println);
 
     }
@@ -73,18 +73,18 @@ public class ComparablePredicates {
     private void equal() {
         ExampleUtil.log("equal");
 
-        long count = hares.stream()
-            .filter(Hare.AGE.equal(3))
+        long count = films.stream()
+            .filter(Film.RATING.equal("PG-13"))
             .count();
 
-        System.out.format("There are %d hare(s) with an age of 3 %n", count);
+        System.out.format("There are %d films(s) with a PG-13 rating %n", count);
     }
 
     private void notEqual() {
         ExampleUtil.log("notEqual");
 
-        hares.stream()
-            .filter(Hare.AGE.notEqual(3))
+        films.stream()
+            .filter(Film.RATING.notEqual("PG-13"))
             .forEachOrdered(System.out::println);
 
     }
@@ -92,8 +92,8 @@ public class ComparablePredicates {
     private void lessThan() {
         ExampleUtil.log("lessThan");
 
-        hares.stream()
-            .filter(Hare.AGE.lessThan(3))
+        films.stream()
+            .filter(Film.LENGTH.lessThan(120))
             .forEachOrdered(System.out::println);
 
     }
@@ -101,8 +101,8 @@ public class ComparablePredicates {
     private void lessOrEqual() {
         ExampleUtil.log("lessOrEqual");
 
-        hares.stream()
-            .filter(Hare.AGE.lessOrEqual(3))
+        films.stream()
+            .filter(Film.LENGTH.lessOrEqual(120))
             .forEachOrdered(System.out::println);
 
     }
@@ -110,8 +110,8 @@ public class ComparablePredicates {
     private void greaterThan() {
         ExampleUtil.log("greaterThan");
 
-        hares.stream()
-            .filter(Hare.AGE.greaterThan(3))
+        films.stream()
+            .filter(Film.LENGTH.greaterThan(120))
             .forEachOrdered(System.out::println);
 
     }
@@ -119,8 +119,8 @@ public class ComparablePredicates {
     private void greaterOrEqual() {
         ExampleUtil.log("greaterOrEqual");
 
-        hares.stream()
-            .filter(Hare.AGE.greaterOrEqual(3))
+        films.stream()
+            .filter(Film.LENGTH.greaterOrEqual(120))
             .forEachOrdered(System.out::println);
 
     }
@@ -128,8 +128,8 @@ public class ComparablePredicates {
     private void between() {
         ExampleUtil.log("between");
 
-        hares.stream()
-            .filter(Hare.AGE.between(3, 9))
+        films.stream()
+            .filter(Film.LENGTH.between(60, 120))
             .forEachOrdered(System.out::println);
 
     }
@@ -137,8 +137,8 @@ public class ComparablePredicates {
     private void betweenIncludeInclude() {
         ExampleUtil.log("betweenIncludeInclude");
 
-        hares.stream()
-            .filter(Hare.AGE.between(3, 9, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
+        films.stream()
+            .filter(Film.LENGTH.between(60, 120, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
             .forEachOrdered(System.out::println);
 
     }
@@ -146,8 +146,8 @@ public class ComparablePredicates {
     private void notBetween() {
         ExampleUtil.log("notBetween");
 
-        hares.stream()
-            .filter(Hare.AGE.notBetween(3, 9))
+        films.stream()
+            .filter(Film.LENGTH.notBetween(60, 120))
             .forEachOrdered(System.out::println);
 
     }
@@ -155,8 +155,8 @@ public class ComparablePredicates {
     private void notBetweenIncludeInclude() {
         ExampleUtil.log("notBetweenIncludeInclude");
 
-        hares.stream()
-            .filter(Hare.AGE.notBetween(3, 9, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
+        films.stream()
+            .filter(Film.LENGTH.notBetween(60, 120, Inclusion.START_INCLUSIVE_END_INCLUSIVE))
             .forEachOrdered(System.out::println);
 
     }
@@ -164,8 +164,8 @@ public class ComparablePredicates {
     private void in() {
         ExampleUtil.log("in");
 
-        hares.stream()
-            .filter(Hare.AGE.in(2, 3, 4))
+        films.stream()
+            .filter(Film.RATING.in("G", "PG", "PG-13"))
             .forEachOrdered(System.out::println);
 
     }
@@ -173,8 +173,8 @@ public class ComparablePredicates {
     private void notIn() {
         ExampleUtil.log("notIn");
 
-        hares.stream()
-            .filter(Hare.AGE.notIn(2, 3, 4))
+        films.stream()
+            .filter(Film.RATING.notIn("G", "PG", "PG-13"))
             .forEachOrdered(System.out::println);
 
     }
@@ -182,10 +182,10 @@ public class ComparablePredicates {
     private void inSet() {
         ExampleUtil.log("inSet");
 
-        Set<Integer> set = Stream.of(2, 3, 4).collect(toSet());
+        Set<String> set = Stream.of("G", "PG", "PG-13").collect(toSet());
 
-        hares.stream()
-            .filter(Hare.AGE.in(set))
+        films.stream()
+            .filter(Film.RATING.in(set))
             .forEachOrdered(System.out::println);
 
     }
@@ -193,10 +193,10 @@ public class ComparablePredicates {
     private void notInSet() {
         ExampleUtil.log("notInSet");
 
-        Set<Integer> set = Stream.of(2, 3, 4).collect(toSet());
+        Set<String> set = Stream.of("G", "PG", "PG-13").collect(toSet());
 
-        hares.stream()
-            .filter(Hare.AGE.notIn(set))
+        films.stream()
+            .filter(Film.RATING.notIn(set))
             .forEachOrdered(System.out::println);
 
     }

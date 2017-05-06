@@ -16,9 +16,9 @@
  */
 package com.speedment.documentation.predicate;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 
@@ -28,12 +28,12 @@ import static com.speedment.documentation.util.ExampleUtil.buildApplication;
  */
 public class ReferencePredicates {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public ReferencePredicates() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -48,19 +48,19 @@ public class ReferencePredicates {
     private void isNull() {
         ExampleUtil.log("isNull");
 
-        long count = hares.stream()
-            .filter(Hare.NAME.isNull())
+        long count = films.stream()
+            .filter(Film.RATING.isNull())
             .count();
-        System.out.format("There are %d hares with a null name %n", count);
+        System.out.format("There are %d films with a null rating %n", count);
     }
 
     private void isNotNull() {
         ExampleUtil.log("isNotNull");
 
-        long count = hares.stream()
-            .filter(Hare.NAME.isNotNull())
+        long count = films.stream()
+            .filter(Film.RATING.isNotNull())
             .count();
-        System.out.format("There are %d hares with a non-null name %n", count);
+        System.out.format("There are %d films with a non-null rating %n", count);
     }
 
 }

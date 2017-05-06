@@ -16,11 +16,11 @@
  */
 package com.speedment.documentation.util;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.carrot.CarrotManager;
-import com.speedment.datamodel.db0.hares.friend.FriendManager;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
-import com.speedment.datamodel.db0.hares.human.HumanManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.actor.ActorManager;
+import com.company.sakila.db0.sakila.film.FilmManager;
+import com.company.sakila.db0.sakila.film_actor.FilmActorManager;
+import com.company.sakila.db0.sakila.language.LanguageManager;
 
 /**
  *
@@ -28,16 +28,16 @@ import com.speedment.datamodel.db0.hares.human.HumanManager;
  */
 public class ManagerHolder {
 
-    protected final HareManager hares;
-    protected final CarrotManager carrots;
-    protected final HumanManager humans;
-    protected final FriendManager friends;
+    protected final FilmManager films;
+    protected final ActorManager actors;
+    protected final FilmActorManager filmActors;
+    protected final LanguageManager languages;
 
-    public ManagerHolder(final HaresApplication app) {
-        this.hares = app.getOrThrow(HareManager.class);
-        this.carrots = app.getOrThrow(CarrotManager.class);
-        this.humans = app.getOrThrow(HumanManager.class);
-        this.friends = app.getOrThrow(FriendManager.class);
+    public ManagerHolder(final SakilaApplication app) {
+        this.films = app.getOrThrow(FilmManager.class);
+        this.actors = app.getOrThrow(ActorManager.class);
+        this.filmActors = app.getOrThrow(FilmActorManager.class);
+        this.languages = app.getOrThrow(LanguageManager.class);
     }
 
 }

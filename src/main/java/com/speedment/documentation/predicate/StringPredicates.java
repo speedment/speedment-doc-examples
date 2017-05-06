@@ -16,9 +16,9 @@
  */
 package com.speedment.documentation.predicate;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 
@@ -28,12 +28,12 @@ import static com.speedment.documentation.util.ExampleUtil.buildApplication;
  */
 public class StringPredicates {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public StringPredicates() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -62,8 +62,8 @@ public class StringPredicates {
     private void isEmpty() {
         ExampleUtil.log("isEmpty");
 
-        long count = hares.stream()
-            .filter(Hare.NAME.isEmpty())
+        long count = films.stream()
+            .filter(Film.TITLE.isEmpty())
             .count();
 
         System.out.format("There are %d hare(s) with an empty name %n", count);
@@ -72,120 +72,120 @@ public class StringPredicates {
     private void isNotEmpty() {
         ExampleUtil.log("isNotEmpty");
 
-        hares.stream()
-            .filter(Hare.NAME.isNotEmpty())
+        films.stream()
+            .filter(Film.TITLE.isNotEmpty())
             .forEachOrdered(System.out::println);
     }
 
     private void equalIgnoreCase() {
         ExampleUtil.log("equalIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.equalIgnoreCase("HaRry"))
+        films.stream()
+            .filter(Film.TITLE.equalIgnoreCase("AlABama dEVil"))
             .forEachOrdered(System.out::println);
     }
 
     private void notEqualIgnoreCase() {
         ExampleUtil.log("notEqualIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.notEqualIgnoreCase("HaRry"))
+        films.stream()
+            .filter(Film.TITLE.notEqualIgnoreCase("AlABama dEVil"))
             .forEachOrdered(System.out::println);
     }
 
     private void startsWith() {
         ExampleUtil.log("startsWith");
 
-        hares.stream()
-            .filter(Hare.NAME.startsWith("H"))
+        films.stream()
+            .filter(Film.TITLE.startsWith("H"))
             .forEachOrdered(System.out::println);
     }
 
     private void notStartsWith() {
         ExampleUtil.log("notStartsWith");
 
-        hares.stream()
-            .filter(Hare.NAME.notStartsWith("H"))
+        films.stream()
+            .filter(Film.TITLE.notStartsWith("H"))
             .forEachOrdered(System.out::println);
     }
 
     private void startsWithIgnoreCase() {
         ExampleUtil.log("startsWithIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.startsWithIgnoreCase("he"))
+        films.stream()
+            .filter(Film.TITLE.startsWithIgnoreCase("ala"))
             .forEachOrdered(System.out::println);
     }
 
     private void notStartsWithIgnoreCase() {
         ExampleUtil.log("notStartsWithIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.notStartsWithIgnoreCase("he"))
+        films.stream()
+            .filter(Film.TITLE.notStartsWithIgnoreCase("ala"))
             .forEachOrdered(System.out::println);
     }
 
     private void endsWith() {
         ExampleUtil.log("endsWith");
 
-        hares.stream()
-            .filter(Hare.NAME.endsWith("y"))
+        films.stream()
+            .filter(Film.TITLE.endsWith("DEVIL"))
             .forEachOrdered(System.out::println);
     }
 
     private void notEndsWith() {
         ExampleUtil.log("notEndsWith");
 
-        hares.stream()
-            .filter(Hare.NAME.notEndsWith("y"))
+        films.stream()
+            .filter(Film.TITLE.notEndsWith("DEVIL"))
             .forEachOrdered(System.out::println);
     }
 
     private void endsWithIgnoreCase() {
         ExampleUtil.log("endsWithIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.endsWithIgnoreCase("Y"))
+        films.stream()
+            .filter(Film.TITLE.endsWithIgnoreCase("deVIL"))
             .forEachOrdered(System.out::println);
     }
 
     private void notEndsWithIgnoreCase() {
         ExampleUtil.log("notEndsWithIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.notEndsWithIgnoreCase("Y"))
+        films.stream()
+            .filter(Film.TITLE.notEndsWithIgnoreCase("deVIL"))
             .forEachOrdered(System.out::println);
     }
 
     private void contains() {
         ExampleUtil.log("contains");
 
-        hares.stream()
-            .filter(Hare.NAME.contains("tt"))
+        films.stream()
+            .filter(Film.TITLE.contains("CON"))
             .forEachOrdered(System.out::println);
     }
 
     private void notContains() {
         ExampleUtil.log("notContains");
 
-        hares.stream()
-            .filter(Hare.NAME.notContains("tt"))
+        films.stream()
+            .filter(Film.TITLE.notContains("CON"))
             .forEachOrdered(System.out::println);
     }
 
     private void containsIgnoreCase() {
         ExampleUtil.log("containsIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.containsIgnoreCase("Tt"))
+        films.stream()
+            .filter(Film.TITLE.containsIgnoreCase("CoN"))
             .forEachOrdered(System.out::println);
     }
 
     private void notContainsIgnoreCase() {
         ExampleUtil.log("notContainsIgnoreCase");
 
-        hares.stream()
-            .filter(Hare.NAME.notContainsIgnoreCase("Tt"))
+        films.stream()
+            .filter(Film.TITLE.notContainsIgnoreCase("CoN"))
             .forEachOrdered(System.out::println);
     }
 

@@ -16,11 +16,11 @@
  */
 package com.speedment.documentation.speedment_examples;
 
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.common.tuple.Tuple2;
 import com.speedment.common.tuple.Tuples;
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -28,12 +28,12 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public Main() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -50,7 +50,7 @@ public class Main {
         log("from");
 
         // Creates a stream over all hares in the database
-        hares.stream()
+        films.stream()
             // For each hare in order, print the hare on standard out
             .forEachOrdered(System.out::println);
 
@@ -60,31 +60,31 @@ public class Main {
         log("where");
 
         // Searches are optimized in the background!
-        final Optional<Hare> oldHare = hares.stream()
-            .filter(Hare.AGE.greaterThan(5))
+        final Optional<Film> longFilm = films.stream()
+            .filter(Film.LENGTH.greaterThan(120))
             .findAny();
 
-        System.out.println(oldHare);
+        System.out.println(longFilm);
     }
 
     private void select() {
         log("select");
 
-        // creates an `IntStream` consisting of the ages of all `Hare`s by
-        // applying the Hare.AGE getter for each hare in the original stream
-        final IntStream ages = hares.stream()
-            .mapToInt(Hare.AGE.getter());
+        // creates an `IntStream` consisting of the ids of all `Film`s by
+        // applying the Film.FILM_ID getter for each Film in the original stream
+        final IntStream lengths = films.stream()
+            .mapToInt(Film.FILM_ID.getter());
 
         // Print the ages
-        ages.forEachOrdered(System.out::println);
+        lengths.forEachOrdered(System.out::println);
 
         // Creates a stream of Tuples with two elements: id and Name
-        Stream<Tuple2<Integer, String>> items = hares.stream()
-            .map(h -> Tuples.of(h.getId(), h.getName()));
+        Stream<Tuple2<Integer, String>> items = films.stream()
+            .map(f -> Tuples.of(f.getFilmId(), f.getTitle()));
 
         // Print the id/name tuples
         items.forEachOrdered(System.out::println);
-        
+
     }
 
     private void log(String testName) {

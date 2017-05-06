@@ -16,11 +16,12 @@
  */
 package com.speedment.documentation.predicate;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
+import java.sql.Date;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -30,12 +31,12 @@ import java.util.stream.Stream;
  */
 public class Examples {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public Examples() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -53,7 +54,7 @@ public class Examples {
     private void printFirstTen() {
         ExampleUtil.log("printFirstTen");
 
-        hares.stream()
+        films.stream()
             .limit(10)
             .forEachOrdered(System.out::println);
     }
@@ -72,30 +73,30 @@ public class Examples {
     private void fieldTest() {
         ExampleUtil.log("fieldTest");
 
-        Predicate<Hare> greaterOrEqualH = Hare.NAME.greaterOrEqual("He");
+        Predicate<Film> startsWithA = Film.TITLE.startsWith("A");
 
-        hares.stream()
-            .filter(greaterOrEqualH)
+        films.stream()
+            .filter(startsWithA)
             .forEachOrdered(System.out::println);
     }
 
     private void fieldTestUnOptimized() {
         ExampleUtil.log("fieldTestUnOptimized");
 
-        Predicate<Hare> greaterOrEqualH = h -> "He".compareTo(h.getName()) <= 0;
+        Predicate<Film> startsWithA = f -> f.getTitle().startsWith("A");
 
-        hares.stream()
-            .filter(greaterOrEqualH)
+        films.stream()
+            .filter(startsWithA)
             .forEachOrdered(System.out::println);
     }
 
     private void example() {
         ExampleUtil.log("example");
 
-        hares.stream()
-            .filter(Hare.COLOR.in("Gray", "White"))
-            .filter(Hare.AGE.greaterThan(1))
-            .filter(Hare.NAME.between("A", "K"))
+        films.stream()
+            .filter(Film.RATING.in("G", "PG"))
+            .filter(Film.LENGTH.greaterThan(120))
+            .filter(Film.SPECIAL_FEATURES.contains("Commentaries"))
             .forEachOrdered(System.out::println);
     }
 

@@ -16,14 +16,13 @@
  */
 package com.speedment.documentation.predicate;
 
-import com.speedment.datamodel.HaresApplication;
-import com.speedment.datamodel.db0.hares.hare.Hare;
-import com.speedment.datamodel.db0.hares.hare.HareManager;
+import com.company.sakila.SakilaApplication;
+import com.company.sakila.db0.sakila.film.Film;
+import com.company.sakila.db0.sakila.film.FilmManager;
 import com.speedment.documentation.util.ExampleUtil;
 import static com.speedment.documentation.util.ExampleUtil.buildApplication;
 import com.speedment.runtime.core.util.StreamComposition;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 /**
  *
@@ -31,12 +30,12 @@ import java.util.stream.Stream;
  */
 public class CombiningPredicates {
 
-    private final HaresApplication app;
-    private final HareManager hares;
+    private final SakilaApplication app;
+    private final FilmManager films;
 
     public CombiningPredicates() {
         app = buildApplication();
-        hares = app.getOrThrow(HareManager.class);
+        films = app.getOrThrow(FilmManager.class);
     }
 
     public static void main(String[] args) {
@@ -53,35 +52,35 @@ public class CombiningPredicates {
     private void isOldAndStartsWithH_usingAnd() {
         ExampleUtil.log("isOldAndStartsWithH_usingAnd");
 
-        Predicate<Hare> isAdult = Hare.AGE.greaterThan(2);
-        Predicate<Hare> nameContains_e = Hare.NAME.contains("e");
+        Predicate<Film> isLong = Film.LENGTH.greaterThan(120);
+        Predicate<Film> isPG13 = Film.RATING.equal("PG-13");
 
-        Predicate<Hare> isAdultAndNameContains_e = isAdult.and(nameContains_e);
+        Predicate<Film> isLongAndRatedPG13 = isLong.and(isPG13);
 
-        hares.stream()
-            .filter(isAdultAndNameContains_e)
+        films.stream()
+            .filter(isLongAndRatedPG13)
             .forEachOrdered(System.out::println);
     }
 
     private void isOldAndStartsWithH_using2Filters() {
         ExampleUtil.log("isOldAndStartsWithH_using2Filters");
 
-        hares.stream()
-            .filter(Hare.AGE.greaterThan(2))
-            .filter(Hare.NAME.contains("e"))
+        films.stream()
+            .filter(Film.LENGTH.greaterThan(120))
+            .filter(Film.RATING.equal("PG-13"))
             .forEachOrdered(System.out::println);
     }
 
     private void or() {
         ExampleUtil.log("or");
 
-        Predicate<Hare> isAdult = Hare.AGE.greaterThan(2);
-        Predicate<Hare> nameContains_e = Hare.NAME.contains("e");
+        Predicate<Film> isLong = Film.LENGTH.greaterThan(120);
+        Predicate<Film> isPG13 = Film.RATING.equal("PG-13");
 
-        Predicate<Hare> isAdultOrNameContains_e = isAdult.or(nameContains_e);
+        Predicate<Film> isLongOrRatedPG13 = isLong.or(isPG13);
 
-        hares.stream()
-            .filter(isAdultOrNameContains_e)
+        films.stream()
+            .filter(isLongOrRatedPG13)
             .forEachOrdered(System.out::println);
     }
 
@@ -89,8 +88,8 @@ public class CombiningPredicates {
         ExampleUtil.log("orUsing2Streams");
 
         StreamComposition.concatAndAutoClose(
-            hares.stream().filter(Hare.AGE.greaterThan(2)),
-            hares.stream().filter(Hare.NAME.contains("e"))
+            films.stream().filter(Film.LENGTH.greaterThan(120)),
+            films.stream().filter(Film.RATING.equal("PG-13"))
         )
             .distinct()
             .forEachOrdered(System.out::println);
