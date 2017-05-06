@@ -97,7 +97,7 @@ public class StringPredicates {
         ExampleUtil.log("startsWith");
 
         films.stream()
-            .filter(Film.TITLE.startsWith("H"))
+            .filter(Film.TITLE.startsWith("ALABAMA"))
             .forEachOrdered(System.out::println);
     }
 
@@ -105,7 +105,7 @@ public class StringPredicates {
         ExampleUtil.log("notStartsWith");
 
         films.stream()
-            .filter(Film.TITLE.notStartsWith("H"))
+            .filter(Film.TITLE.notStartsWith("ALABAMA"))
             .forEachOrdered(System.out::println);
     }
 
