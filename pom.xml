@@ -3,27 +3,52 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.speedment</groupId>
     <artifactId>documentation-examples</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.9</version>
     <packaging>jar</packaging>
     <name>Speedment - Documentation - Examples</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <speedment.version>3.0.8</speedment.version>
+        <speedment.version>3.0.9</speedment.version>
+<!--        <speedment.enterprise.version>1.1.6</speedment.enterprise.version>-->
         <db.groupId>mysql</db.groupId>
         <db.artifactId>mysql-connector-java</db.artifactId>
         <db.version>5.1.42</db.version>
-    </properties>
+    </properties>    
     
     <build>
-        <plugins>
+        
+    <plugins>
             <plugin>
                 <groupId>com.speedment</groupId>
                 <artifactId>speedment-maven-plugin</artifactId>
                 <version>${speedment.version}</version>
-            </plugin>
+            </plugin> 
+
+        
+<!--        
+        <plugin>
+        <groupId>com.speedment.enterprise</groupId>
+        <artifactId>speedment-enterprise-maven-plugin</artifactId>
+        <version>${speedment.enterprise.version}</version>
+        
+              <configuration>
+                <components>
+                  <component>com.speedment.enterprise.virtualcolumn.tool.VirtualColumnToolBundle</component>
+                  <component>com.speedment.enterprise.datastore.tool.DataStoreToolBundle</component>
+                </components>
+                <parameters>
+                  <parameter>
+                    <name>licenseKey</name>
+                    <value>(YOUR LICENSE CODE)</value>
+                  </parameter>
+                </parameters>
+              </configuration>
+            </plugin>-->
         </plugins>
+        
+        
     </build>
     <dependencies>
         <dependency>
@@ -32,6 +57,32 @@
             <version>${speedment.version}</version>
             <type>pom</type>
         </dependency>
+        
+        
+        <!--        <dependency>
+            <groupId>com.speedment.enterprise</groupId>
+            <artifactId>virtualcolumn-runtime</artifactId>
+            <version>${speedment.enterprise.version}</version>
+        </dependency>
+                <dependency>
+            <groupId>com.speedment.enterprise</groupId>
+            <artifactId>runtime</artifactId>
+            <version>${speedment.enterprise.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.speedment.enterprise</groupId>
+            <artifactId>datastore-runtime</artifactId>
+            <version>${speedment.enterprise.version}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.42</version>
+            <scope>runtime</scope>
+        </dependency>
+
+                
         <dependency>
             <groupId>${db.groupId}</groupId>
             <artifactId>${db.artifactId}</artifactId>

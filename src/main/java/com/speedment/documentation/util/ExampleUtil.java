@@ -20,6 +20,7 @@ import com.company.sakila.SakilaApplication;
 import com.company.sakila.SakilaApplicationBuilder;
 import com.speedment.runtime.core.ApplicationBuilder.LogType;
 import java.util.Scanner;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 /**
@@ -30,7 +31,7 @@ public final class ExampleUtil {
 
     private static final String DEFAULT_PASSWORD = "sakila-password";
 
-    public static SakilaApplication buildApplication() {
+    public static SakilaApplication buildApplication(UnaryOperator<SakilaApplicationBuilder>... operators) {
 
         System.out.println("Connecting to the database");
         System.out.println("Enter password (<return> = '" + DEFAULT_PASSWORD + "'): ");
@@ -39,9 +40,11 @@ public final class ExampleUtil {
         final String inputPassword = scan.nextLine();
         final String password = inputPassword.isEmpty() ? DEFAULT_PASSWORD : inputPassword;
 
-        final SakilaApplicationBuilder builder = new SakilaApplicationBuilder()
+        SakilaApplicationBuilder builder = new SakilaApplicationBuilder()
             .withLogging(LogType.STREAM)
             .withPassword(password);
+
+        builder = Stream.of(operators).reduce(builder, (b, o) -> o.apply(b), (a, b) -> a);
 
         return builder.build();
     }

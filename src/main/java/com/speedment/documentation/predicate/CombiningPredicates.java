@@ -43,26 +43,24 @@ public class CombiningPredicates {
     }
 
     private void run() {
-        isOldAndStartsWithH_usingAnd();
-        isOldAndStartsWithH_using2Filters();
+        isLongAndRatedPG13();
+        isLongAndRatedPG13UsintFilters();
         or();
         orUsing2Streams();
     }
 
-    private void isOldAndStartsWithH_usingAnd() {
-        ExampleUtil.log("isOldAndStartsWithH_usingAnd");
+    private void isLongAndRatedPG13() {
+        ExampleUtil.log("isLongAndRatedPG113");
 
         Predicate<Film> isLong = Film.LENGTH.greaterThan(120);
         Predicate<Film> isPG13 = Film.RATING.equal("PG-13");
-
-        Predicate<Film> isLongAndRatedPG13 = isLong.and(isPG13);
-
+        
         films.stream()
-            .filter(isLongAndRatedPG13)
+            .filter(isLong.and(isPG13))
             .forEachOrdered(System.out::println);
     }
 
-    private void isOldAndStartsWithH_using2Filters() {
+    private void isLongAndRatedPG13UsintFilters() {
         ExampleUtil.log("isOldAndStartsWithH_using2Filters");
 
         films.stream()
@@ -77,10 +75,8 @@ public class CombiningPredicates {
         Predicate<Film> isLong = Film.LENGTH.greaterThan(120);
         Predicate<Film> isPG13 = Film.RATING.equal("PG-13");
 
-        Predicate<Film> isLongOrRatedPG13 = isLong.or(isPG13);
-
         films.stream()
-            .filter(isLongOrRatedPG13)
+            .filter(isLong.or(isPG13))
             .forEachOrdered(System.out::println);
     }
 

@@ -48,7 +48,7 @@ public class Examples {
         startsWith();
         fieldTest();
         fieldTestUnOptimized();
-        example();
+        compositeExample();
     }
 
     private void printFirstTen() {
@@ -90,8 +90,8 @@ public class Examples {
             .forEachOrdered(System.out::println);
     }
 
-    private void example() {
-        ExampleUtil.log("example");
+    private void compositeExample() {
+        ExampleUtil.log("compositeExample");
 
         films.stream()
             .filter(Film.RATING.in("G", "PG"))

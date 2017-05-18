@@ -66,7 +66,7 @@ public class StringPredicates {
             .filter(Film.TITLE.isEmpty())
             .count();
 
-        System.out.format("There are %d hare(s) with an empty name %n", count);
+        System.out.format("There are %d films(s) with an empty title %n", count);
     }
 
     private void isNotEmpty() {
